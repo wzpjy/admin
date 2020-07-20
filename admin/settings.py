@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'admin.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 数据库的引擎
+        'NAME': 'shop',  # database 数据库
+        'HOST': "192.168.18.25",  # 主机
+        'PORT': 3306,  # 数据库端口号
+        'USER': 'root',  # 数据库连接的账户名
+        'PASSWORD': '',  # 数据库连接的密码
+        'ATOMIC_REQUESTS': True  # 给每一个视图开启一个事务，
     }
 }
 
