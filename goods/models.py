@@ -26,7 +26,7 @@ class TGoodsType(models.Model):
     create_time = models.DateTimeField(blank=True, null=True)
     update_time = models.DateTimeField(blank=True, null=True)
     del_time = models.DateTimeField(blank=True, null=True)
-    pid = models.ForeignKey('self', models.DO_NOTHING, db_column='pid', blank=True, null=True)
+    pid = models.ForeignKey('self', models.DO_NOTHING, db_column='pid', blank=True, null=True, related_name="children")
 
     class Meta:
         managed = False

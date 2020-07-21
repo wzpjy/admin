@@ -26,7 +26,7 @@ def product_category_add(request, pid):
     # 添加分类
     param = request.POST.dict()
     # 将 pid 添加到数据中
-    param["pid"] = pid
+    param["pid_id"] = pid
     param["status"] = 1
     goods_type = TGoodsType.objects.create(**param)
     return JsonResponse(model_to_dict(goods_type))
