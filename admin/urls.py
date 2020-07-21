@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -22,13 +23,5 @@ urlpatterns = [
 
     path('', views.index, name="index"),
 
-    path('home', views.home, name="home"),
-
-    path('Category_Manage', views.Category_Manage, name="Category_Manage"),
-
-    path('Products_List', views.Products_List, name="Products_List"),
-
-    path('Brand_Manage', views.Brand_Manage, name="Brand_Manage"),
-
-    path('product_category_add', views.product_category_add, name="product_category_add")
+    url(r'^goods/', include('goods.urls')),
 ]
