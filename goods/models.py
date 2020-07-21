@@ -18,6 +18,43 @@ class DjangoMigrations(models.Model):
         db_table = 'django_migrations'
 
 
+class TGoods(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    simple_title = models.CharField(max_length=50, blank=True, null=True)
+    num = models.IntegerField(blank=True, null=True)
+    place = models.CharField(max_length=100, blank=True, null=True)
+    material = models.CharField(max_length=50, blank=True, null=True)
+    brand = models.CharField(max_length=50, blank=True, null=True)
+    weight = models.IntegerField()
+    unit = models.CharField(max_length=4)
+    new_price = models.CharField(max_length=100, blank=True, null=True)
+    old_price = models.CharField(max_length=100, blank=True, null=True)
+    keyword = models.CharField(max_length=100, blank=True, null=True)
+    comment = models.CharField(max_length=200, blank=True, null=True)
+    detail = models.TextField(blank=True, null=True)
+    is_comment = models.IntegerField(blank=True, null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
+    delete_time = models.DateTimeField(blank=True, null=True)
+    update_time = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
+    check_status = models.CharField(max_length=50, blank=True, null=True)
+    type = models.ForeignKey('TGoodsType', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 't_goods'
+
+
+class TGoodsPhoto(models.Model):
+    photo_url = models.CharField(max_length=100, blank=True, null=True)
+    create_time = models.DateTimeField()
+    goods = models.ForeignKey(TGoods, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 't_goods_photo'
+
+
 class TGoodsType(models.Model):
     type_name = models.CharField(max_length=100, blank=True, null=True)
     type_desc = models.CharField(max_length=200, blank=True, null=True)
@@ -26,7 +63,7 @@ class TGoodsType(models.Model):
     create_time = models.DateTimeField(blank=True, null=True)
     update_time = models.DateTimeField(blank=True, null=True)
     del_time = models.DateTimeField(blank=True, null=True)
-    pid = models.ForeignKey('self', models.DO_NOTHING, db_column='pid', blank=True, null=True, related_name="children")
+    pid = models.ForeignKey('self', models.DO_NOTHING, db_column='pid', blank=True, null=True)
 
     class Meta:
         managed = False

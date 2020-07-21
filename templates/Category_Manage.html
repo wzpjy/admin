@@ -54,12 +54,13 @@
             </div>
         </div>
         <!---->
-        <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO SRC="/goods/Category_Manage" class="page_right_style"></iframe>
+        <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO SRC="/goods/Category_Manage"
+                class="page_right_style"></iframe>
     </div>
 </div>
 </body>
 </html>
-<script type="text/javascript"> 
+<script type="text/javascript">
     $(function () {
         $("#category").fix({
             float: 'left',
@@ -131,7 +132,7 @@
                 $("#testIframe").trigger('click');
 
             },
-            onClick: function(event, treeId, treeNode, clickFlag){
+            onClick: function (event, treeId, treeNode, clickFlag) {
                 current_node = treeNode
                 console.log(current_node)
             }
