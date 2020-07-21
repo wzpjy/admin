@@ -19,6 +19,8 @@ def Products_List(request):
 def Brand_Manage(request):
     return render(request, "Brand_Manage.html")
 
+def picture_add(request):
+    return render(request, "picture-add.html")
 
 def product_category_add(request, pid):
     if request.method == "GET":

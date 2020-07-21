@@ -9,6 +9,8 @@ urlpatterns = [
 
     path('Category_Manage', views.Category_Manage, name="Category_Manage"),
 
+    path('picture_add', views.picture_add, name="picture_add"),
+
     path('Products_List', views.Products_List, name="Products_List"),
 
     path('Brand_Manage', views.Brand_Manage, name="Brand_Manage"),
