@@ -36,7 +36,7 @@ def picture_add(request, type_id):
     if form.is_valid():
         goods = form.instance
 
-        goods.goods_type_id = type_id
+        goods.type_id = type_id
 
         goods.save()
 
