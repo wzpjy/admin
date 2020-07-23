@@ -38,7 +38,7 @@ class TGoods(models.Model):
     update_time = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=50, blank=True, null=True)
     check_status = models.CharField(max_length=50, blank=True, null=True)
-    type = models.ForeignKey('TGoodsType', models.DO_NOTHING)
+    type = models.ForeignKey('TGoodsType', models.DO_NOTHING, blank=True, null=True, related_name="goods")
 
     class Meta:
         managed = False
@@ -47,7 +47,6 @@ class TGoods(models.Model):
 
 class TGoodsPhoto(models.Model):
     photo_url = models.CharField(max_length=100, blank=True, null=True)
-    create_time = models.DateTimeField()
     goods = models.ForeignKey(TGoods, models.DO_NOTHING)
 
     class Meta:

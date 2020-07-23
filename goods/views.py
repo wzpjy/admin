@@ -1,7 +1,7 @@
 from django.forms import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from goods.models import TGoodsType, DjangoMigrations, TGoods, DjangoMigrations
+from goods.models import TGoodsType, TGoodsPhoto, TGoods
 from .forms import GoodsModelForm
 from django.conf import settings
 import os, uuid
@@ -32,24 +32,21 @@ def add_page(request):
 
 
 def picture_add(request, type_id):
-    if request.method == "GET":
-        print(type_id, "get")
-        return render(request, "picture-add.html", {"id": type_id})
-    if request.method == "POST":
-        print(type_id, "post")
-        # 接受页面传过来的参数
-        param = request.POST.dict()
-        img_url = request.POST.getlist("img_url")
-        param.pop("img_url")
-        param.pop("file")
-        # 将参数写入表中
-        param["sort_id"] = type_id
-        print(param, img_url)
-        product = TGoods.objects.create(**param)
-
-        for i in img_url:
-            DjangoMigrations.objects.create(image=i, product_id=product.id)
-        return render(request, "picture-add.html")
+    form = GoodsModelForm(data=request.POST)
+    if form.is_valid():
+        param = form.cleaned_data
+        param["type_id"] = type_id
+        param["status"] = 1
+        goods = TGoods.objects.create(**param)
+        # 进行图片的存储
+        photo_url = request.POST.getlist("img_url")
+        goods_imgs = [TGoodsPhoto(**{"photo_url": url, "goods_id": goods.pk}) for url in photo_url]
+        TGoodsPhoto.objects.bulk_create(goods_imgs)
+        # return JsonResponse({"status": True, "msg": "添加成功", "type_id": type_id})
+        request.session.setdefault("type_id", type_id)
+        return redirect(to="/goods/add_page")
+    return JsonResponse({"status": False, "msg": form.errors, "type_id": type_id},
+                        json_dumps_params={"ensure_ascii": False})
 
 
 def upload_product(request):

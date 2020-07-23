@@ -161,7 +161,7 @@
             <div class="clearfix cl">
                 <label class="form-label col-2">允许评论：</label>
                 <div class="formControls col-2 skin-minimal">
-                    <div class="check-box" style=" margin-top:9px"><input type="checkbox" name="is_comment"
+                    <div class="check-box" style=" margin-top:9px"><input type="checkbox" name="is_comment" value="0"
                                                                           id="checkbox-1"><label
                             for="checkbox-1">&nbsp;</label></div>
                 </div>
@@ -171,7 +171,7 @@
                     <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i
                             class="icon-save "></i>保存并提交审核
                     </button>
-                    <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                    <button onClick="layer_jclose();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
                 </div>
             </div>
         </form>
@@ -195,6 +195,7 @@
 <script type="text/javascript" src="/static/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/js/H-ui.admin.js"></script>
 <script>
+
 $(function() {
 	$("#add_picture").fix({
 		float : 'left',
@@ -207,7 +208,19 @@ $(function() {
 });
 $( document).ready(function(){
 //初始化宽度、高度
-  
+
+    $("#checkbox-1").change(function(){
+
+        if ($(this).prop("checked")) {
+            $(this).val(1)
+        }else{
+            $(this).val(0)
+        }
+    })
+
+
+
+
    $(".widget-box").height($(window).height()); 
    $(".page_right_style").height($(window).height()); 
    $(".page_right_style").width($(window).width()-220); 
