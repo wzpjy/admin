@@ -195,52 +195,6 @@
 <script type="text/javascript" src="/static/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/js/H-ui.admin.js"></script>
 <script>
-
-    function enable_form() {
-        $("#form-article-add").find(':radio', ':checkbox').prop('disabled', false)
-        $("#form-article-add").find('input', 'select').prop('disabled', false)
-        $(":submit").prop('disabled', false);
-        $("textarea").prop('disabled', false);
-    }
-
-    function disable_form() {
-        $("#form-article-add").find(':radio', ':checkbox').prop('disabled', true)
-        $("#form-article-add").find('input', 'select').prop('disabled', true)
-        $(":submit").prop('disabled', true)
-        $("textarea").prop('disabled', true);
-    }
-
-
-    function article_save_submit() {
-        // 获取商品类型的ID
-        let goods_type_id = $("#form-article-add").data('type_id')
-
-        /*
-        $.ajax({
-            url: '/goods/add_product/' + goods_type_id,
-            method: 'post',
-            data: $("#form-article-add").serialize(),
-            dataType: 'json',
-            success: function (data) {
-                // 勾选对应的树、并进行提示
-                let ztree = $.fn.zTree.getZTreeObj('treeDemo')
-                let node = ztree.getNodesByParam('id', data.type_id)[0]
-                ztree.selectNode(node);
-                // 重置表单
-                document.getElementById("form-article-add").reset()
-
-                // 进行信息的提示
-                alert(data.msg)
-            }
-        })*/
-        let action = '/goods/picture_add/' + goods_type_id
-
-        $("#form-article-add").attr("action", action)
-        $("#form-article-add").submit()
-    }
-
-
-
 $(function() {
 	$("#add_picture").fix({
 		float : 'left',
@@ -267,8 +221,12 @@ $( document).ready(function(){
 });
 $(function(){
 	var ue = UE.getEditor('editor');
+	$("#sub_btn").click(function () {
+        $("#form-article-add").submit()
+    })
 });
 /******树状图********/
+let current_node=false
 var setting = {
 	view: {
 		dblClickExpand: false,
@@ -292,40 +250,33 @@ var setting = {
         type: 'get',
         detaType: 'json',
     },
-	callback: {
-	    onAsyncSuccess:　function(event, treeId){
-	        let ztree = $.fn.zTree.getZTreeObj('treeDemo')
-            ztree.expandAll(true)
-            // 获取选中的 type_id
-            let type_id = '{{ type_id }}'
-
-            if (type_id != ''){
-                let node = ztree.getNodesByParam('id', type_id)[0]
-                ztree.selectNode(node);
-            }
+    callback: {
+        beforeClick: function (treeId, treeNode) {
+            $("#form-article-add").attr("action","/goods/picture_add/" + treeNode.id)
         },
-		onClick: function(event, treeId, treeNode) {
-		    // 获取商品ID
-			if (treeNode.level == 3) {
-                let goods_type_id = treeNode.id
-                $("#form-article-add").data('type_id', goods_type_id)
-                // 启用所有的输入框
-                enable_form()
-            } else {
-                $("#form-article-add").data('type_id', null)
-                // 禁用所有的输入框
-                disable_form()
-            }
-		}
-	}
+    }
 };
-    $(document).ready(function () {
-        $.fn.zTree.init($("#treeDemo"), setting);
-    });
+
+var code;
+
+function showCode(str) {
+	if (!code) code = $("#code");
+	code.empty();
+	code.append("<li>"+str+"</li>");
+}
+$(document).ready(function(){
+	var t = $("#treeDemo");
+	t = $.fn.zTree.init(t, setting);
+	demoIframe = $("#testIframe");
+
+	//demoIframe.bind("load", loadReady);
+	var zTree = $.fn.zTree.getZTreeObj("tree");
+	//zTree.selectNode(zTree.getNodeByParam("id",'11'));
+});
+
 </script>
 <script type="text/javascript">
     $(function () {
-
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
